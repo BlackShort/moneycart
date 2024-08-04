@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "697482930359",
+    "project_id": "moneycart-d1372",
+    "storage_bucket": "moneycart-d1372.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:697482930359:android:fb206cbda3453607374532",
+        "android_client_info": {
+          "package_name": "biz.moneycart.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU2rQki4r5yJFYQy2P-msHfSRa9_KZbn8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
