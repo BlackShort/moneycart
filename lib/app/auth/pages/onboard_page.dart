@@ -19,7 +19,7 @@ class OnboardPage extends StatelessWidget {
             const Spacer(flex: 2),
             SvgPicture.asset(
               'assets/svgs/business_deal3.svg',
-              height: 230,
+              height: 280,
             ),
             const Text(
               'Welcome to MoneyCart!',

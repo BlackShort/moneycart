@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:moneycart/app/auth/pages/onboard_page.dart';
 import 'package:moneycart/app/auth/pages/signup_page.dart';
+import 'package:moneycart/app/auth/pages/splash_screen.dart';
 import 'package:moneycart/app/base/pages/base_page.dart';
 import 'package:moneycart/app/docs/pages/doc_page.dart';
 import 'package:moneycart/app/home/pages/home_page.dart';
@@ -18,6 +19,9 @@ import 'package:moneycart/config/routes/route_names.dart';
 
 class Routes {
   static final List<GetPage> routes = [
+    // ----------Splash Routes----------
+    GetPage(name: AppRoute.splash, page: () => const SplashScreen()),
+
     // ----------Onboarding Routes----------
     GetPage(name: AppRoute.onboard, page: () => const OnboardPage()),
 

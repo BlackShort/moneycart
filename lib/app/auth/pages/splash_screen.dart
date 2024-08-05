@@ -5,33 +5,34 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 2), () {
-      // Get.offNamed(RouteNames.select);
-    });
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(flex: 1),
-            Image.asset(
-              'assets/images/splash_sawaari_logo.png',
+            Container(
               width: 200,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            const Text(
-              'Sawaari',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFFFF725E),
+              height: MediaQuery.of(context).size.height * 0.5,
+              alignment: Alignment.bottomCenter,
+              child: Image.asset(
+                'assets/images/moneycart_image.png',
+                width: 200,
               ),
             ),
-            const Spacer(flex: 1),
+            Container(
+              width: 200,
+              height: MediaQuery.of(context).size.height * 0.5,
+              alignment: Alignment.bottomCenter,
+              child: const Text(
+                'Moneycart',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFFFF725E),
+                ),
+              ),
+            ),
           ],
         ),
       ),

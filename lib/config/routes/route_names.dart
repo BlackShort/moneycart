@@ -1,4 +1,7 @@
 class AppRoute {
+  // ----------Splash Routes----------
+  static const String splash = '/splash';
+
   // ----------Onboarding Routes----------
   static const String onboard = '/onboard';
 

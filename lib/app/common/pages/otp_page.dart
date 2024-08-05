@@ -74,14 +74,14 @@ class _OtpPageState extends State<OtpPage> {
             children: [
               Icon(
                 Icons.arrow_back_ios,
-                color: Colors.black,
+                color: AppPallete.secondary,
                 size: 19,
               ),
               SizedBox(width: 8),
               Text(
                 'Back',
                 style: TextStyle(
-                  color: Colors.black,
+                color: AppPallete.secondary,
                   fontWeight: FontWeight.w500,
                   fontSize: 19,
                   fontFamily: 'Poppins',
@@ -96,7 +96,7 @@ class _OtpPageState extends State<OtpPage> {
           FocusScope.of(context).unfocus();
         },
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: ConstrainedBox(
             constraints: BoxConstraints(
               minHeight: MediaQuery.of(context).size.height -
@@ -122,7 +122,7 @@ class _OtpPageState extends State<OtpPage> {
                           child: ClipOval(
                             child: SvgPicture.asset(
                               'assets/svgs/verification.svg',
-                              height: 200,
+                              height: 230,
                             ),
                           ),
                         ),
@@ -132,7 +132,7 @@ class _OtpPageState extends State<OtpPage> {
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w500,
-                            fontSize: 22,
+                            fontSize: 24,
                             fontFamily: 'Poppins',
                           ),
                         ),
@@ -194,7 +194,6 @@ class _OtpPageState extends State<OtpPage> {
                     ),
                   ),
                   const Spacer(flex: 1),
-                  const SizedBox(height: 32),
                   Obx(
                     () => _authController.isLoading.value
                         ? const Loader()
@@ -204,13 +203,14 @@ class _OtpPageState extends State<OtpPage> {
                               text: 'Submit',
                               onPressed: () async {
                                 if (formKey.currentState?.validate() ?? false) {
+                                  FocusScope.of(context).unfocus();
                                   _authController.verifyOtp(otpController.text);
                                 }
                               },
                             ),
                           ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 32),
                 ],
               ),
             ),

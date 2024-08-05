@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import '../models/notification_model.dart';
-import 'notification_service.dart';
 
 class NotificationController extends GetxController {
-  final NotificationService _notificationService = Get.find<NotificationService>();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   RxList<NotificationModel> notifications = <NotificationModel>[].obs;
   RxBool isLoading = false.obs;
@@ -15,30 +17,51 @@ class NotificationController extends GetxController {
     fetchNotifications();
   }
 
-  void fetchNotifications() async {
+  Future<void> fetchNotifications() async {
     try {
       isLoading.value = true;
-      await _notificationService.loadNotifications();
-      isLoading.value = false;
+      final notification = await _firestore
+          .collection('notifications')
+          .doc(_auth.currentUser!.uid)
+          .get();
+      notifications.value = notification
+          .data()!['notifications']
+          .map<NotificationModel>((notif) => NotificationModel.fromMap(notif))
+          .toList();
     } catch (e) {
       hasError.value = true;
+    } finally {
       isLoading.value = false;
     }
   }
 
-  void addNotification(NotificationModel notification) {
-    _notificationService.addNotification(notification);
+  Future<void> addNotification(NotificationModel notification) async {
+    notifications.add(notification);
+    await _firestore
+        .collection('notifications')
+        .doc(notification.id)
+        .set(notification.toMap());
   }
 
-  void markAsRead(String id) {
-    _notificationService.markAsRead(id);
+  Future<void> markAsRead(String id) async {
+    final notification = notifications.firstWhere((notif) => notif.id == id);
+    notification.isRead = true;
+    await _firestore
+        .collection('notifications')
+        .doc(id)
+        .update(notification.toMap());
   }
 
-  void deleteNotification(String id) {
-    _notificationService.deleteNotification(id);
+  Future<void> deleteNotification(String id) async {
+    notifications.removeWhere((notif) => notif.id == id);
+    await _firestore.collection('notifications').doc(id).delete();
   }
 
   void deleteOldNotifications() {
-    _notificationService.deleteOldNotifications();
+    final DateTime now = DateTime.now();
+    notifications.removeWhere((notif) =>
+        notif.timestamp.isBefore(now.subtract(const Duration(days: 7))));
+    // Optional: remove old notifications from Firestore as well
+    // await removeOldNotificationsFromFirestore();
   }
 }

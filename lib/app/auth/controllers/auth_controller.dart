@@ -26,15 +26,12 @@ class AuthController extends GetxController {
     ever(firebaseUser, _setInitialScreen);
   }
 
-  Future<void> _setInitialScreen(User? user) async {
-    isInitialLoading.value = true;
-    await Future.delayed(const Duration(seconds: 2));
+  _setInitialScreen(User? user) async {
     try {
-      if (user == null) {
-        Get.offAll(() => const OnboardPage());
-      } else {
-        Get.offAll(() => const BasePage());
-      }
+      isInitialLoading.value = true;
+      user == null
+          ? Get.offAll(() => const OnboardPage())
+          : Get.offAll(() => const BasePage());
     } catch (e) {
       print(e.toString());
     } finally {

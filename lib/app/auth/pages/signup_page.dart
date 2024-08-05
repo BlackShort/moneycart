@@ -81,7 +81,7 @@ class _SignupPageState extends State<SignupPage> {
           FocusScope.of(context).unfocus();
         },
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: ConstrainedBox(
             constraints: BoxConstraints(
               minHeight: MediaQuery.of(context).size.height,
@@ -107,7 +107,7 @@ class _SignupPageState extends State<SignupPage> {
                             child: ClipOval(
                               child: SvgPicture.asset(
                                 'assets/svgs/signup.svg',
-                                height: 200,
+                                height: 230,
                               ),
                             ),
                           ),
@@ -116,7 +116,8 @@ class _SignupPageState extends State<SignupPage> {
                             'Continue with Phone',
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 22,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w500,
                               color: Colors.black,
                               letterSpacing: 1,
                             ),
@@ -124,9 +125,10 @@ class _SignupPageState extends State<SignupPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 8),
                     const Spacer(flex: 1),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IntrinsicWidth(
                           child: DropdownButtonHideUnderline(
@@ -159,12 +161,17 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         const SizedBox(width: 10),
                         Flexible(
-                          child: CustomTextField(
-                            controller: _phoneController,
-                            labelText: 'Phone Number',
-                            keyboardType: TextInputType.number,
-                            letterSpacing: 2,
-                            validator: _validatePhoneNumber,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomTextField(
+                                controller: _phoneController,
+                                labelText: 'Phone Number',
+                                keyboardType: TextInputType.number,
+                                letterSpacing: 2,
+                                validator: _validatePhoneNumber,
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -228,7 +235,6 @@ class _SignupPageState extends State<SignupPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 50),
                     const Spacer(flex: 1),
                     Obx(
                       () => _authController.isLoading.value
@@ -239,6 +245,7 @@ class _SignupPageState extends State<SignupPage> {
                                 text: 'Continue',
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate()) {
+                                    FocusScope.of(context).unfocus();
                                     String phone = _selectedCountry.code +
                                         _phoneController.text.trim();
                                     await _authController
