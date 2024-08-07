@@ -33,7 +33,8 @@ class AppRoute {
   // ----------Profile Routes----------
   static const String setProfile = '/set_profile';
   static const String profileUpdate = '/profile_update';
-  static const String account = '/account';
+  static const String claimReferral = '/claim_eferral';
+  static const String feedback = '/feedback';
   static const String settings = '/settings';
   static const String about = '/about_us';
   static const String help = '/help_support';

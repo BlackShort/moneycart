@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:moneycart/app/auth/models/user_model.dart';
 import 'package:moneycart/app/common/widgets/custom_text_field.dart';
-import 'package:moneycart/app/common/widgets/primary_button.dart';
+import 'package:moneycart/app/common/widgets/loading_button.dart';
 import 'package:moneycart/app/profile/controllers/profile_controller.dart';
 import 'package:moneycart/config/theme/app_pallete.dart';
 import 'package:moneycart/core/errors/custom_snackbar.dart';
@@ -289,19 +289,15 @@ class _ProfileSetupState extends State<ProfileSetup> {
               ),
               const SizedBox(height: 32),
               Obx(
-                () => _profileController.isLoading.value
-                    ? const Center(
-                        child: CircularProgressIndicator.adaptive(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            AppPallete.primary,
-                          ),
-                        ),
-                      )
-                    : PrimaryButton(
+                    () => SizedBox(
+                      width: double.infinity,
+                      child: LoadingButton(
                         text: 'Save',
-                        onPressed: _handleSave,
+                        isLoading: _profileController.isLoading.value,
+                        onPressed:_handleSave,
                       ),
-              ),
+                    ),
+                  ),
             ],
           ),
         ),

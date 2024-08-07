@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:moneycart/config/theme/app_pallete.dart';
 import 'package:moneycart/app/common/widgets/primary_button.dart';
 
-class ReferralsPage extends StatefulWidget {
-  const ReferralsPage({super.key});
+class ClaimReferralPage extends StatefulWidget {
+  const ClaimReferralPage({super.key});
 
   @override
-  State<ReferralsPage> createState() => _ReferralsPageState();
+  State<ClaimReferralPage> createState() => _ClaimReferralPageState();
 }
 
-class _ReferralsPageState extends State<ReferralsPage> {
+class _ClaimReferralPageState extends State<ClaimReferralPage> {
   final TextEditingController _referralController = TextEditingController();
 
   @override

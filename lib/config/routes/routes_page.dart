@@ -4,6 +4,11 @@ import 'package:moneycart/app/auth/pages/signup_page.dart';
 import 'package:moneycart/app/auth/pages/splash_screen.dart';
 import 'package:moneycart/app/base/pages/base_page.dart';
 import 'package:moneycart/app/docs/pages/doc_page.dart';
+import 'package:moneycart/app/drawer/pages/about_us_page.dart';
+import 'package:moneycart/app/drawer/pages/claim_referral_page.dart';
+import 'package:moneycart/app/drawer/pages/feedback_page.dart';
+import 'package:moneycart/app/drawer/pages/help_support.dart';
+import 'package:moneycart/app/drawer/pages/settings_page.dart';
 import 'package:moneycart/app/home/pages/home_page.dart';
 import 'package:moneycart/app/insurance/pages/insurance_page.dart';
 import 'package:moneycart/app/loan/pages/loan_page.dart';
@@ -50,9 +55,11 @@ class Routes {
     // ----------Profile Routes----------
     GetPage(name: AppRoute.setProfile, page: () => const ProfileSetup()),
     GetPage(name: AppRoute.profileUpdate, page: () => const ProfileUpdate()),
-    GetPage(name: AppRoute.account, page: () => const OnboardPage()),
-    GetPage(name: AppRoute.settings, page: () => const OnboardPage()),
-    GetPage(name: AppRoute.about, page: () => const OnboardPage()),
-    GetPage(name: AppRoute.help, page: () => const OnboardPage()),
+    GetPage(
+        name: AppRoute.claimReferral, page: () => const ClaimReferralPage()),
+    GetPage(name: AppRoute.feedback, page: () => const FeedbackPage()),
+    GetPage(name: AppRoute.settings, page: () => const SettingsPage()),
+    GetPage(name: AppRoute.about, page: () => const AboutUsPage()),
+    GetPage(name: AppRoute.help, page: () => const HelpAndSupportPage()),
   ];
 }

@@ -17,7 +17,7 @@ class CustomImageLoader extends StatelessWidget {
               child: SizedBox(
                 width: 50,
                 height: 50,
-                child: Image.asset('assets/images/loading_animation.gif'),
+                child: Image.asset('assets/images/placeholder.png'),
               ),
             ),
           ],

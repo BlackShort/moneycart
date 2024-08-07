@@ -137,7 +137,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
       {
         'icon': Icons.groups_rounded,
         'text': 'Claim Referral',
-        'onTap': () => Get.toNamed(AppRoute.referral),
+        'onTap': () => Get.toNamed(AppRoute.claimReferral),
       },
       {
         'icon': Icons.info_rounded,
@@ -162,7 +162,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
       {
         'icon': Icons.feedback_rounded,
         'text': 'Feedback',
-        'onTap': () => Get.toNamed(AppRoute.help),
+        'onTap': () => Get.toNamed(AppRoute.feedback),
       },
     ];
 
@@ -189,7 +189,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
         size: 24,
       ),
       title: Text(text),
-      onTap: onTap,
+      onTap: () {
+        Navigator.of(context).pop();
+        onTap();
+      },
     );
   }
 }

@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:moneycart/config/theme/app_pallete.dart';
 import 'package:moneycart/app/common/widgets/primary_button.dart';
 
-class ComplaintsPage extends StatefulWidget {
-  const ComplaintsPage({super.key});
+class FeedbackPage extends StatefulWidget {
+  const FeedbackPage({super.key});
 
   @override
-  State<ComplaintsPage> createState() => _ComplaintsPageState();
+  State<FeedbackPage> createState() => _FeedbackPageState();
 }
 
-class _ComplaintsPageState extends State<ComplaintsPage> {
+class _FeedbackPageState extends State<FeedbackPage> {
   final TextEditingController _complaintController = TextEditingController();
   String? _selectedSubject;
 

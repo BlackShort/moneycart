@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:moneycart/app/common/widgets/loader.dart';
+import 'package:moneycart/app/common/widgets/loading_button.dart';
 import 'package:pinput/pinput.dart';
-import 'package:moneycart/app/common/widgets/primary_button.dart';
 import 'package:smart_auth/smart_auth.dart';
 import 'package:moneycart/app/auth/controllers/auth_controller.dart';
 import 'package:moneycart/config/theme/app_pallete.dart';
@@ -81,7 +80,7 @@ class _OtpPageState extends State<OtpPage> {
               Text(
                 'Back',
                 style: TextStyle(
-                color: AppPallete.secondary,
+                  color: AppPallete.secondary,
                   fontWeight: FontWeight.w500,
                   fontSize: 19,
                   fontFamily: 'Poppins',
@@ -195,20 +194,19 @@ class _OtpPageState extends State<OtpPage> {
                   ),
                   const Spacer(flex: 1),
                   Obx(
-                    () => _authController.isLoading.value
-                        ? const Loader()
-                        : SizedBox(
-                            width: double.infinity,
-                            child: PrimaryButton(
-                              text: 'Submit',
-                              onPressed: () async {
-                                if (formKey.currentState?.validate() ?? false) {
-                                  FocusScope.of(context).unfocus();
-                                  _authController.verifyOtp(otpController.text);
-                                }
-                              },
-                            ),
-                          ),
+                    () => SizedBox(
+                      width: double.infinity,
+                      child: LoadingButton(
+                        text: 'Submit',
+                        isLoading: _authController.isLoading.value,
+                        onPressed: () async {
+                          if (formKey.currentState?.validate() ?? false) {
+                            FocusScope.of(context).unfocus();
+                            _authController.verifyOtp(otpController.text);
+                          }
+                        },
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 32),
                 ],

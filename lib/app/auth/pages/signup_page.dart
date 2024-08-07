@@ -3,8 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:moneycart/app/auth/controllers/auth_controller.dart';
 import 'package:moneycart/app/common/widgets/custom_text_field.dart';
-import 'package:moneycart/app/common/widgets/loader.dart';
-import 'package:moneycart/app/common/widgets/primary_button.dart';
+import 'package:moneycart/app/common/widgets/loading_button.dart';
 import 'package:moneycart/config/theme/app_pallete.dart';
 import 'package:moneycart/core/utils/country_codes.dart';
 
@@ -237,23 +236,21 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const Spacer(flex: 1),
                     Obx(
-                      () => _authController.isLoading.value
-                          ? const Loader()
-                          : SizedBox(
-                              width: double.infinity,
-                              child: PrimaryButton(
-                                text: 'Continue',
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    FocusScope.of(context).unfocus();
-                                    String phone = _selectedCountry.code +
-                                        _phoneController.text.trim();
-                                    await _authController
-                                        .signInWithPhone(phone);
-                                  }
-                                },
-                              ),
-                            ),
+                      () => SizedBox(
+                        width: double.infinity,
+                        child: LoadingButton(
+                          text: 'Continue',
+                          isLoading: _authController.isLoading.value,
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              FocusScope.of(context).unfocus();
+                              String phone = _selectedCountry.code +
+                                  _phoneController.text.trim();
+                              await _authController.signInWithPhone(phone);
+                            }
+                          },
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 32),
                   ],

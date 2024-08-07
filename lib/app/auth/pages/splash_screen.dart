@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moneycart/config/theme/app_pallete.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -9,27 +10,27 @@ class SplashScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               width: 200,
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.58,
               alignment: Alignment.bottomCenter,
               child: Image.asset(
-                'assets/images/moneycart_image.png',
-                width: 200,
+                'assets/logo/moneycart_logo.png',
+                width: 130,
               ),
             ),
             Container(
               width: 200,
-              height: MediaQuery.of(context).size.height * 0.5,
-              alignment: Alignment.bottomCenter,
+              height: MediaQuery.of(context).size.height * 0.2,
+              alignment: Alignment.center,
               child: const Text(
                 'Moneycart',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFFFF725E),
+                  color: AppPallete.boldprimary,
                 ),
               ),
             ),

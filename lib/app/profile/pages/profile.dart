@@ -6,7 +6,7 @@ import 'package:moneycart/app/auth/models/user_model.dart';
 import 'package:moneycart/app/base/widgets/custom_app_bar.dart';
 import 'package:moneycart/app/base/widgets/custom_drawer.dart';
 import 'package:moneycart/app/common/widgets/loader.dart';
-import 'package:moneycart/app/common/widgets/primary_button.dart';
+import 'package:moneycart/app/common/widgets/loading_button.dart';
 import 'package:moneycart/app/profile/controllers/profile_controller.dart';
 import 'package:moneycart/config/routes/route_names.dart';
 import 'package:moneycart/config/theme/app_pallete.dart';
@@ -20,6 +20,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final ProfileController _profileController = Get.put(ProfileController());
+  final AuthController _authController = Get.put(AuthController());
   Future<UserModel?>? _userFuture;
 
   @override
@@ -163,11 +164,17 @@ class _ProfilePageState extends State<ProfilePage> {
             title: 'Gender', value: userData.gender ?? 'Not specified'),
         ProfileField(title: 'Address', value: userData.address),
         const SizedBox(height: 32),
-        PrimaryButton(
-          text: 'Log out',
-          onPressed: () {
-            AuthController.instance.signOut();
-          },
+        Obx(
+          () => SizedBox(
+            width: double.infinity,
+            child: LoadingButton(
+              text: 'Log out',
+              isLoading: _authController.isLoading.value,
+              onPressed: () {
+                _authController.signOut();
+              },
+            ),
+          ),
         ),
       ],
     );
