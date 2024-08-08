@@ -9,42 +9,40 @@ class HelpAndSupportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Help & Support',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-              fontSize: 18,
-              fontFamily: 'Poppins',
-            ),
-          ),
-          titleSpacing: 0,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 19,
-            ),
-            onPressed: () {
-              Get.back();
-            },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Help & Support',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
+            fontSize: 18,
+            fontFamily: 'Poppins',
           ),
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildFAQSection(),
-              const SizedBox(height: 32),
-              _buildContactSupportSection(),
-            ],
+        titleSpacing: 0,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+            size: 19,
           ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildFAQSection(),
+            const SizedBox(height: 32),
+            _buildContactSupportSection(),
+          ],
         ),
       ),
     );

@@ -49,6 +49,7 @@ class _LoanPageState extends State<LoanPage> {
                   Get.back();
                 },
                 style: ElevatedButton.styleFrom(
+                  elevation: 2,
                   backgroundColor: AppPallete.primary,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 12),

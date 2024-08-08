@@ -33,12 +33,6 @@ class _RewardsPageState extends State<RewardsPage> {
         setState(() {
           user = userData;
         });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to load user data.'),
-          ),
-        );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -46,6 +40,7 @@ class _RewardsPageState extends State<RewardsPage> {
           content: Text('Error loading user data: $e'),
         ),
       );
+      print("Error loading user data: $e");
     } finally {
       setState(() {
         isLoading = false;

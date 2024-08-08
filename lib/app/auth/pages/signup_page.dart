@@ -83,7 +83,9 @@ class _SignupPageState extends State<SignupPage> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height,
+              minHeight: MediaQuery.of(context).size.height -
+                  AppBar().preferredSize.height -
+                  MediaQuery.of(context).padding.top,
             ),
             child: IntrinsicHeight(
               child: Form(
@@ -124,7 +126,7 @@ class _SignupPageState extends State<SignupPage> {
                         ],
                       ),
                     ),
-                    const Spacer(flex: 1),
+                    const SizedBox(height: 40),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -175,7 +177,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 16),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Wrap(
@@ -252,7 +254,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),

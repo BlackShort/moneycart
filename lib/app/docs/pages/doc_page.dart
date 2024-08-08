@@ -64,7 +64,8 @@ class DocPage extends StatelessWidget {
                       _docController.fetchDocuments();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppPallete.primary,
+                      elevation: 2,
+                      backgroundColor: AppPallete.boldprimary,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 24, vertical: 12),
                       shape: RoundedRectangleBorder(

@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
       height: 8.0,
       width: 8.0,
       decoration: BoxDecoration(
-        color: isActive ? Colors.blue : Colors.grey,
+        color: isActive ? AppPallete.boldprimary : Colors.grey,
         borderRadius: BorderRadius.circular(4.0),
       ),
     );

@@ -30,12 +30,6 @@ class _ReferralWidgetState extends State<ReferralWidget> {
         setState(() {
           user = userData;
         });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to load user data.'),
-          ),
-        );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -43,6 +37,7 @@ class _ReferralWidgetState extends State<ReferralWidget> {
           content: Text('Error loading user data: $e'),
         ),
       );
+      print("Error loading user data: $e");
     } finally {
       setState(() {
         isLoading = false;

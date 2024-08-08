@@ -125,7 +125,7 @@ class _OtpPageState extends State<OtpPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 16),
                         const Text(
                           'Verification',
                           style: TextStyle(
@@ -208,7 +208,7 @@ class _OtpPageState extends State<OtpPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
