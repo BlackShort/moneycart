@@ -1,11 +1,11 @@
-import 'package:moneycart/app/common/widgets/custom_text_field.dart';
-import 'package:moneycart/app/common/widgets/loader.dart';
-import 'package:moneycart/app/common/widgets/primary_button.dart';
+import 'package:moneycart/app/common/widgets/loading_button.dart';
+import 'package:moneycart/app/tds/pages/tds_details.dart';
+import 'package:moneycart/config/theme/app_pallete.dart';
+import 'package:pinput/pinput.dart';
 import 'package:moneycart/app/tds/controllers/tds_controller.dart';
-import 'package:moneycart/config/constants/app_constants.dart';
-import 'package:moneycart/core/errors/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart'; // Add this import for SVG support
 
 class TdsBankOtp extends StatefulWidget {
   final bool? enableOtp;
@@ -43,45 +43,64 @@ class _TdsBankOtpState extends State<TdsBankOtp> {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 20.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(15.0),
         side: BorderSide(color: Colors.grey.shade300),
       ),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            RichText(
-              text: TextSpan(
-                children: [
-                  const TextSpan(
-                    text: 'Account No.: ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  TextSpan(
-                    text: bankData!['bank_account'] ?? 'N/A',
-                    style: const TextStyle(color: Colors.black),
-                  ),
-                ],
+            SvgPicture.asset(
+              'assets/icons/bank.svg',
+              height: 45,
+              width: 45,
+              colorFilter: const ColorFilter.mode(
+                AppPallete.primary,
+                BlendMode.srcIn,
               ),
             ),
-            const SizedBox(height: 10),
-            RichText(
-              text: TextSpan(
+            const SizedBox(width: 20),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const TextSpan(
-                    text: 'IFSC Code: ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: 'Account No.: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Poppins',
+                            color: Colors.black,
+                          ),
+                        ),
+                        TextSpan(
+                          text: bankData!['bank_account'] ?? 'N/A',
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                      ],
                     ),
                   ),
-                  TextSpan(
-                    text: bankData!['bank_ifsc'] ?? 'N/A',
-                    style: const TextStyle(color: Colors.black),
+                  const SizedBox(height: 10),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: 'IFSC Code: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Poppins',
+                            color: Colors.black,
+                          ),
+                        ),
+                        TextSpan(
+                          text: bankData!['bank_ifsc'] ?? 'N/A',
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -99,14 +118,35 @@ class _TdsBankOtpState extends State<TdsBankOtp> {
         title: const Text(
           'Confirm Bank Account',
           style: TextStyle(
-            color: Colors.white,
+            color: AppPallete.secondary,
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Poppins',
           ),
         ),
-        automaticallyImplyLeading: Navigator.of(context).canPop(),
-        backgroundColor: const Color(0xFF56c596),
-        iconTheme: const IconThemeData(
-          color: Colors.white,
+        titleSpacing: 0,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(
+            Icons.arrow_back_ios_rounded,
+            color: AppPallete.secondary,
+            size: 19,
+          ),
         ),
+        actions: [
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/icons/refresh.svg',
+              width: 22,
+              height: 22,
+              colorFilter: const ColorFilter.mode(
+                AppPallete.secondary,
+                BlendMode.srcIn,
+              ),
+            ),
+            onPressed: fetchBankDetails,
+          ),
+        ],
       ),
       body: GestureDetector(
         onTap: () {
@@ -121,26 +161,40 @@ class _TdsBankOtpState extends State<TdsBankOtp> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  AppConstants.otpImg,
-                  height: MediaQuery.of(context).size.height * 0.35,
-                  width: MediaQuery.of(context).size.width * 0.9,
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    shape: BoxShape.circle,
+                  ),
+                  child: ClipOval(
+                    child: SvgPicture.asset(
+                      'assets/svgs/bank_confim.svg',
+                      height: 230,
+                    ),
+                  ),
                 ),
+                const SizedBox(height: 20),
                 const Text(
                   "Enter OTP",
                   style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 28,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
+                const SizedBox(height: 10),
                 const Text(
-                  "Enter the OTP sent to your registered mobile number or email id.",
+                  "Enter the OTP sent to your registered mobile number or email.",
                   style: TextStyle(
                     fontSize: 16,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w400,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 10),
                 if (isLoading)
                   const CircularProgressIndicator()
                 else if (bankData == null)
@@ -151,12 +205,31 @@ class _TdsBankOtpState extends State<TdsBankOtp> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      CustomTextField(
+                      const Text(
+                        "Enter Confirmation OTP",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                      const SizedBox(height: 16),
+                      Pinput(
                         controller: phoneController,
-                        labelText: 'Enter OTP',
-                        obscureText: false,
-                        keyboardType: TextInputType.number,
-                        prefixIcon: Icons.call_rounded,
+                        length: 6,
+                        defaultPinTheme: PinTheme(
+                          width: 50,
+                          height: 50,
+                          textStyle: const TextStyle(
+                            fontSize: 20,
+                            color: Color.fromRGBO(30, 60, 87, 1),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.grey),
+                          ),
+                        ),
                         validator: (val) {
                           if (val!.isEmpty) {
                             return 'Please fill in this field';
@@ -171,33 +244,32 @@ class _TdsBankOtpState extends State<TdsBankOtp> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 50),
-                Obx(
-                  () {
-                    return controller.isLoading.value
-                        ? const Center(
-                            child: Loader(),
-                          )
-                        : PrimaryButton(
-                            text: 'Submit',
-                            onPressed: () {
-                              if (widget.enableOtp!) {
-                                if (_formKey.currentState!.validate()) {
-                                  controller.confirmBank(
-                                    phoneController.text.trim(),
-                                  );
-                                }
-                              } else {
-                                FocusScope.of(context).unfocus();
-                                showCustomSnackbar(
-                                  title: "Oops!",
-                                  message:
-                                      "You cannot submit this until you get the OTP.",
-                                );
-                              }
-                            },
-                          );
-                  },
+                const SizedBox(height: 40),
+                SizedBox(
+                  width: double.infinity,
+                  child: Obx(
+                    () => LoadingButton(
+                      isLoading: controller.isLoading.value,
+                      text: 'Submit',
+                      onPressed: () {
+                        Get.off(() => const TdsDetails());
+                        // if (widget.enableOtp!) {
+                        //   if (_formKey.currentState!.validate()) {
+                        //     controller.confirmBank(
+                        //       phoneController.text.trim(),
+                        //     );
+                        //   }
+                        // } else {
+                        //   FocusScope.of(context).unfocus();
+                        //   showCustomSnackbar(
+                        //     title: "Oops!",
+                        //     message:
+                        //         "You cannot submit this until you get the OTP.",
+                        //   );
+                        // }
+                      },
+                    ),
+                  ),
                 ),
               ],
             ),

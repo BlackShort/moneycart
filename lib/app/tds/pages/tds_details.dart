@@ -1,10 +1,11 @@
-import 'package:moneycart/app/common/widgets/primary_button.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:moneycart/app/common/widgets/loading_button.dart';
 import 'package:moneycart/app/tds/controllers/tds_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:moneycart/app/tds/pages/tds_payment.dart';
-import 'package:moneycart/config/constants/app_constants.dart';
+import 'package:moneycart/app/tds/pages/tds_final_otp.dart';
+import 'package:moneycart/config/theme/app_pallete.dart';
 
 class TdsDetails extends StatefulWidget {
   const TdsDetails({super.key});
@@ -40,12 +41,18 @@ class _TdsDetailsState extends State<TdsDetails> {
 
   String get payment {
     int tdsCharge = totalTds;
-    if (tdsCharge >= 0 && tdsCharge <= 2000) {
+    if (tdsCharge <= 1000) {
+      return '149';
+    } else if (tdsCharge >= 1001 && tdsCharge <= 2500) {
       return '249';
-    } else if (tdsCharge > 2000 && tdsCharge <= 5000) {
+    } else if (tdsCharge >= 2501 && tdsCharge <= 5000) {
       return '499';
-    } else if (tdsCharge > 5000) {
+    } else if (tdsCharge > 5000 && tdsCharge <= 15000) {
       return '999';
+    } else if (tdsCharge > 15000 && tdsCharge <= 18000) {
+      return '1499';
+    } else if (tdsCharge > 18000) {
+      return '1999';
     } else {
       return '0';
     }
@@ -77,9 +84,23 @@ class _TdsDetailsState extends State<TdsDetails> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-            'Congratulations, You are eligible for refund of the below TDS amount.'),
+          'Congratulations!',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Poppins',
+            color: AppPallete.blackSecondary,
+          ),
+        ),
+        SizedBox(height: 5),
         Text(
-            'Please pay the fees to help us file the Income Tax return and claim the refund.'),
+          'You are eligible for a refund of the below TDS amount. Please pay the fees to help us file the Income Tax return and claim the refund.',
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: 'Poppins',
+            color: AppPallete.secondary,
+          ),
+        ),
       ],
     );
   }
@@ -97,7 +118,13 @@ class _TdsDetailsState extends State<TdsDetails> {
     if (details == null || details.isEmpty) {
       return const Padding(
         padding: EdgeInsets.all(8.0),
-        child: Text('No TDS details available for this year.'),
+        child: Text(
+          'No TDS details available for this year.',
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            color: AppPallete.secondary,
+          ),
+        ),
       );
     }
     return ListView.builder(
@@ -107,7 +134,13 @@ class _TdsDetailsState extends State<TdsDetails> {
       itemBuilder: (context, index) {
         final detail = details[index];
         return ListTile(
-          title: Text('TDS Amount for $year: ${detail['tds']}'),
+          title: Text(
+            'TDS Amount for $year: ${detail['tds']}',
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Poppins',
+            ),
+          ),
           subtitle: Text('Date: ${detail['date']}'),
         );
       },
@@ -116,7 +149,7 @@ class _TdsDetailsState extends State<TdsDetails> {
 
   Widget buildTdsDetailsCard() {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 20.0),
+      margin: const EdgeInsets.only(bottom: 20.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
         side: BorderSide(color: Colors.grey.shade300),
@@ -127,20 +160,30 @@ class _TdsDetailsState extends State<TdsDetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildMessage(),
-            const SizedBox(height: 10),
+            const Divider(height: 30, thickness: 1, color: Colors.grey),
             buildTdsAmountList(_currentYear, _currentYearDetails),
             const SizedBox(height: 10),
             if (_previousYearSelected)
               buildTdsAmountList(_previousYear, _previousYearDetails),
-            const SizedBox(height: 10),
+            const Divider(height: 30, thickness: 1, color: Colors.grey),
             const Text(
               'Refund: ₹0',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Poppins',
+                color: AppPallete.blackSecondary,
+              ),
             ),
             const SizedBox(height: 10),
             Text(
               'Payable Amount: ₹$payment',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Poppins',
+                color: AppPallete.blackSecondary,
+              ),
             ),
           ],
         ),
@@ -155,14 +198,35 @@ class _TdsDetailsState extends State<TdsDetails> {
         title: const Text(
           'TDS Details',
           style: TextStyle(
-            color: Colors.white,
+            color: AppPallete.secondary,
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Poppins',
           ),
         ),
-        automaticallyImplyLeading: Navigator.of(context).canPop(),
-        backgroundColor: const Color(0xFF56c596),
-        iconTheme: const IconThemeData(
-          color: Colors.white,
+        titleSpacing: 0,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(
+            Icons.arrow_back_ios_rounded,
+            color: AppPallete.secondary,
+            size: 19,
+          ),
         ),
+        actions: [
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/icons/refresh.svg',
+              width: 22,
+              height: 22,
+              colorFilter: const ColorFilter.mode(
+                AppPallete.secondary,
+                BlendMode.srcIn,
+              ),
+            ),
+            onPressed: fetchAndSetDetails,
+          ),
+        ],
       ),
       body: GestureDetector(
         onTap: () {
@@ -172,29 +236,32 @@ class _TdsDetailsState extends State<TdsDetails> {
           onRefresh: fetchAndSetDetails,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  AppConstants.taxImg,
-                  height: MediaQuery.of(context).size.height * 0.25,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                ),
-                const SizedBox(height: 10),
                 buildTdsDetailsCard(),
-                const SizedBox(height: 50),
-                PrimaryButton(
-                  text: 'Pay Now',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const TdsPayment(),
-                      ),
-                    );
-                  },
+                const SizedBox(height: 40),
+                SizedBox(
+                  width: double.infinity,
+                  child: Obx(
+                    () => LoadingButton(
+                      isLoading: controller.isLoading.value,
+                      text: 'Pay Now',
+                      onPressed: () {
+                        Get.off(() => const TdsFinalOtp(
+                          enableOtp: true,
+                        ));
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const TdsPayment(),
+                        //   ),
+                        // );
+                      },
+                    ),
+                  ),
                 ),
               ],
             ),

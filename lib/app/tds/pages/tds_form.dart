@@ -1,6 +1,7 @@
 import 'package:moneycart/app/common/widgets/form_field.dart';
 import 'package:moneycart/app/common/widgets/loading_button.dart';
 import 'package:moneycart/app/tds/controllers/tds_controller.dart';
+import 'package:moneycart/app/tds/pages/tds_otp.dart';
 import 'package:moneycart/config/theme/app_pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
@@ -295,21 +296,24 @@ class _TdsFormState extends State<TdsForm> {
                       isLoading: controller.isLoading.value,
                       text: 'Submit',
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          controller.submitFormData(
-                            _firstNameController.text.trim(),
-                            _lastNameController.text.trim(),
-                            _emailController.text.trim(),
-                            _phoneController.text.trim(),
-                            _dobController.text.trim(),
-                            _aadharController.text.trim(),
-                            _pinCodeController.text.trim(),
-                            _addressController.text.trim(),
-                            _bankAccountController.text.trim(),
-                            _bankIFSCController.text.trim(),
-                            _panController.text.trim(),
-                          );
-                        }
+                        Get.off(() => const TdsOtp(
+                              enableOtp: true,
+                        ));
+                        // if (_formKey.currentState!.validate()) {
+                        //   controller.submitFormData(
+                        //     _firstNameController.text.trim(),
+                        //     _lastNameController.text.trim(),
+                        //     _emailController.text.trim(),
+                        //     _phoneController.text.trim(),
+                        //     _dobController.text.trim(),
+                        //     _aadharController.text.trim(),
+                        //     _pinCodeController.text.trim(),
+                        //     _addressController.text.trim(),
+                        //     _bankAccountController.text.trim(),
+                        //     _bankIFSCController.text.trim(),
+                        //     _panController.text.trim(),
+                        //   );
+                        // }
                       },
                     ),
                   ),
