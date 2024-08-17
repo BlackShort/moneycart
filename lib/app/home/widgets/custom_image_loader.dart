@@ -5,14 +5,17 @@ class CustomImageLoader extends StatelessWidget {
   const CustomImageLoader({super.key});
 
   @override
- Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        color: Colors.white,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
     );
   }

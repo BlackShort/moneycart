@@ -41,7 +41,7 @@ class _TdsDetailsState extends State<TdsDetails> {
 
   String get payment {
     int tdsCharge = totalTds;
-    if (tdsCharge <= 1000) {
+    if (tdsCharge >= 1 && tdsCharge <= 1000) {
       return '149';
     } else if (tdsCharge >= 1001 && tdsCharge <= 2500) {
       return '249';
@@ -116,11 +116,11 @@ class _TdsDetailsState extends State<TdsDetails> {
 
   Widget buildTdsAmountList(String year, List<dynamic>? details) {
     if (details == null || details.isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.all(8.0),
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Text(
-          'No TDS details available for this year.',
-          style: TextStyle(
+          'No TDS details available for the year: $year.',
+          style: const TextStyle(
             fontFamily: 'Poppins',
             color: AppPallete.secondary,
           ),
@@ -166,9 +166,9 @@ class _TdsDetailsState extends State<TdsDetails> {
             if (_previousYearSelected)
               buildTdsAmountList(_previousYear, _previousYearDetails),
             const Divider(height: 30, thickness: 1, color: Colors.grey),
-            const Text(
-              'Refund: ₹0',
-              style: TextStyle(
+            Text(
+              'Refund: ₹$totalTds',
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 fontFamily: 'Poppins',
@@ -233,6 +233,7 @@ class _TdsDetailsState extends State<TdsDetails> {
           FocusScope.of(context).unfocus();
         },
         child: RefreshIndicator(
+          color: AppPallete.boldprimary,
           onRefresh: fetchAndSetDetails,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -251,8 +252,8 @@ class _TdsDetailsState extends State<TdsDetails> {
                       text: 'Pay Now',
                       onPressed: () {
                         Get.off(() => const TdsFinalOtp(
-                          enableOtp: true,
-                        ));
+                              enableOtp: true,
+                            ));
                         // Navigator.push(
                         //   context,
                         //   MaterialPageRoute(

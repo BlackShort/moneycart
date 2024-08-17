@@ -65,6 +65,7 @@ class ReferralList extends StatelessWidget {
         ],
       ),
       body: RefreshIndicator(
+        color: AppPallete.boldprimary,
         onRefresh: _referralController.fetchDocuments,
         child: Obx(() {
           if (_referralController.isLoading.value) {

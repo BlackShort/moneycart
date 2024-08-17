@@ -1,3 +1,4 @@
+import 'package:moneycart/app/common/widgets/loader.dart';
 import 'package:moneycart/app/common/widgets/loading_button.dart';
 import 'package:moneycart/app/tds/pages/tds_details.dart';
 import 'package:moneycart/config/theme/app_pallete.dart';
@@ -153,6 +154,7 @@ class _TdsBankOtpState extends State<TdsBankOtp> {
           FocusScope.of(context).unfocus();
         },
         child: RefreshIndicator(
+          color: AppPallete.boldprimary,
           onRefresh: fetchBankDetails,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -196,7 +198,7 @@ class _TdsBankOtpState extends State<TdsBankOtp> {
                 ),
                 const SizedBox(height: 10),
                 if (isLoading)
-                  const CircularProgressIndicator()
+                  const Loader()
                 else if (bankData == null)
                   const Text('No bank details found.'),
                 if (!isLoading && bankData != null) _buildBankDetailsCard(),

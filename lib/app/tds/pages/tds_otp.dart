@@ -65,22 +65,26 @@ class _TdsOtpState extends State<TdsOtp> {
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildHeaderImage(),
-              const SizedBox(height: 16),
-              _buildTitleText(),
-              const SizedBox(height: 4),
-              _buildDescriptionText(),
-              const SizedBox(height: 25),
-              _buildOtpForm(),
-              const SizedBox(height: 50),
-              _buildSubmitButton(controller),
-              const SizedBox(height: 8.0),
-            ],
+        child: RefreshIndicator(
+          color: AppPallete.boldprimary,
+          onRefresh: _refresh,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildHeaderImage(),
+                const SizedBox(height: 16),
+                _buildTitleText(),
+                const SizedBox(height: 4),
+                _buildDescriptionText(),
+                const SizedBox(height: 25),
+                _buildOtpForm(),
+                const SizedBox(height: 50),
+                _buildSubmitButton(controller),
+                const SizedBox(height: 8.0),
+              ],
+            ),
           ),
         ),
       ),

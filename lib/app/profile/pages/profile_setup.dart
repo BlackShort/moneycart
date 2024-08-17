@@ -11,6 +11,7 @@ import 'package:moneycart/app/profile/controllers/profile_controller.dart';
 import 'package:moneycart/config/theme/app_pallete.dart';
 import 'package:moneycart/core/errors/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProfileSetup extends StatefulWidget {
   const ProfileSetup({super.key});
@@ -36,75 +37,104 @@ class _ProfileSetupState extends State<ProfileSetup> {
   }
 
   Future<void> _selectImageSource() async {
-    List<String> avatarUrls = await _profileController.fetchDummyAvatars();
+    List<String> avatarUrls = [];
 
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          color: Colors.white,
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                itemCount: avatarUrls.length,
-                itemBuilder: (context, index) {
-                  String url = avatarUrls[index];
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _profileImageUrl = url;
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundImage: CachedNetworkImageProvider(url),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 25),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            // Fetch avatars asynchronously after opening the bottom sheet.
+            _profileController.fetchDummyAvatars().then((fetchedUrls) {
+              setState(() {
+                avatarUrls = fetchedUrls;
+              });
+            });
+
+            return Container(
+              color: Colors.white,
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  GestureDetector(
-                    onTap: () => _pickImage(ImageSource.gallery),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.photo_library, color: AppPallete.secondary),
-                        SizedBox(width: 4),
-                        Text('Library',
-                            style: TextStyle(color: AppPallete.secondary)),
-                      ],
+                  GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
                     ),
+                    itemCount: avatarUrls.isNotEmpty ? avatarUrls.length : 8,
+                    itemBuilder: (context, index) {
+                      if (avatarUrls.isEmpty) {
+                        // Show shimmer effect while avatars are loading
+                        return Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: Container(
+                            width: 60,
+                            height: 60,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        );
+                      } else {
+                        String url = avatarUrls[index];
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _profileImageUrl = url;
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundImage: CachedNetworkImageProvider(url),
+                          ),
+                        );
+                      }
+                    },
                   ),
-                  GestureDetector(
-                    onTap: () => _pickImage(ImageSource.camera),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.camera_alt, color: AppPallete.secondary),
-                        SizedBox(width: 4),
-                        Text('Camera',
-                            style: TextStyle(color: AppPallete.secondary)),
-                      ],
-                    ),
+                  const SizedBox(height: 25),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () => _pickImage(ImageSource.gallery),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.photo_library,
+                                color: AppPallete.secondary),
+                            SizedBox(width: 4),
+                            Text('Gallary',
+                                style: TextStyle(color: AppPallete.secondary)),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => _pickImage(ImageSource.camera),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.camera_alt, color: AppPallete.secondary),
+                            SizedBox(width: 4),
+                            Text('Camera',
+                                style: TextStyle(color: AppPallete.secondary)),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
@@ -165,7 +195,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
         title: const Text(
           'Profile Setup',
           style: TextStyle(
-            color: Colors.black,
+            color: AppPallete.secondary,
             fontWeight: FontWeight.w500,
             fontSize: 18,
             fontFamily: 'Poppins',
@@ -289,15 +319,15 @@ class _ProfileSetupState extends State<ProfileSetup> {
               ),
               const SizedBox(height: 32),
               Obx(
-                    () => SizedBox(
-                      width: double.infinity,
-                      child: LoadingButton(
-                        text: 'Save',
-                        isLoading: _profileController.isLoading.value,
-                        onPressed:_handleSave,
-                      ),
-                    ),
+                () => SizedBox(
+                  width: double.infinity,
+                  child: LoadingButton(
+                    text: 'Save',
+                    isLoading: _profileController.isLoading.value,
+                    onPressed: _handleSave,
                   ),
+                ),
+              ),
             ],
           ),
         ),

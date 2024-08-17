@@ -46,6 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
           routeName: AppRoute.profileUpdate,
         ),
         body: RefreshIndicator(
+          color: AppPallete.boldprimary,
           onRefresh: _refreshUserProfile,
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),

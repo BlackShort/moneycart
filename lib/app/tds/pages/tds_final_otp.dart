@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:moneycart/app/common/pages/payment_page.dart';
 import 'package:moneycart/app/common/widgets/loading_button.dart';
 import 'package:moneycart/app/tds/controllers/tds_controller.dart';
-import 'package:moneycart/app/tds/pages/tds_bank_otp.dart';
 import 'package:moneycart/config/theme/app_pallete.dart';
 import 'package:pinput/pinput.dart';
 
@@ -25,7 +25,7 @@ class _TdsFinalOtpState extends State<TdsFinalOtp> {
   Widget build(BuildContext context) {
     final controller = Get.put(TdsController());
 
-    Future<void> _refresh() async {
+    Future<void> refresh() async {
       await controller.fetchOTPState();
     }
 
@@ -49,25 +49,43 @@ class _TdsFinalOtpState extends State<TdsFinalOtp> {
             size: 19,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/icons/refresh.svg',
+              width: 22,
+              height: 22,
+              colorFilter: const ColorFilter.mode(
+                AppPallete.secondary,
+                BlendMode.srcIn,
+              ),
+            ),
+            onPressed: refresh,
+          ),
+        ],
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildHeaderImage(),
-              const SizedBox(height: 16),
-              _buildTitleText(),
-              const SizedBox(height: 4),
-              _buildDescriptionText(),
-              const SizedBox(height: 25),
-              _buildOtpForm(),
-              const SizedBox(height: 50),
-              _buildSubmitButton(controller),
-              const SizedBox(height: 8.0),
-            ],
+        child: RefreshIndicator(
+          color: AppPallete.boldprimary,
+          onRefresh: refresh,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildHeaderImage(),
+                const SizedBox(height: 16),
+                _buildTitleText(),
+                const SizedBox(height: 4),
+                _buildDescriptionText(),
+                const SizedBox(height: 25),
+                _buildOtpForm(),
+                const SizedBox(height: 50),
+                _buildSubmitButton(controller),
+                const SizedBox(height: 8.0),
+              ],
+            ),
           ),
         ),
       ),
@@ -98,7 +116,7 @@ class _TdsFinalOtpState extends State<TdsFinalOtp> {
         fontSize: 32,
         fontWeight: FontWeight.w500,
         fontFamily: 'Poppins',
-       ),
+      ),
     );
   }
 
@@ -211,9 +229,8 @@ class _TdsFinalOtpState extends State<TdsFinalOtp> {
           isLoading: controller.isLoading.value,
           text: 'Submit',
           onPressed: () {
-            Get.off(() => const TdsBankOtp(
-                  enableOtp: true,
-                ));
+            Get.off(() => const PaymentPage());
+
             // if (widget.enableOtp) {
             //   if (_formKey.currentState!.validate()) {
             //     controller.submitOTPData(

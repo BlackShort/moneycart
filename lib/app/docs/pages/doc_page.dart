@@ -20,6 +20,7 @@ class DocPage extends StatelessWidget {
         callback: _docController.fetchDocuments,
       ),
       body: RefreshIndicator(
+        color: AppPallete.boldprimary,
         onRefresh: _docController.fetchDocuments,
         child: Obx(() {
           if (_docController.isLoading.value) {

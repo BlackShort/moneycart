@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:moneycart/app/base/pages/base_page.dart';
-import 'package:moneycart/app/common/pages/success_page.dart';
-import 'package:moneycart/app/tds/pages/tds_bank_otp.dart';
-import 'package:moneycart/app/tds/pages/tds_final_otp.dart';
+// import 'package:moneycart/app/base/pages/base_page.dart';
+// import 'package:moneycart/app/common/pages/success_page.dart';
+// import 'package:moneycart/app/tds/pages/tds_bank_otp.dart';
+// import 'package:moneycart/app/tds/pages/tds_final_otp.dart';
 import 'package:moneycart/core/errors/snackbar.dart';
 
 class TdsController extends GetxController {
@@ -82,12 +82,12 @@ class TdsController extends GetxController {
         'tdsformfilluped': true,
       });
 
-      Get.off(
-        () => const SuccessPage(
-          successMessage:
-              "Your request has been successfully submitted. \nMoneyCart Team would connect with you shortly to complete the registration on Income tax site.",
-        ),
-      );
+      // Get.off(
+      //   () => const SuccessPage(
+      //     successMessage:
+      //         "Your request has been successfully submitted. \nMoneyCart Team would connect with you shortly to complete the registration on Income tax site.",
+      //   ),
+      // );
     } catch (e) {
       showCustomSnackbar();
     } finally {
@@ -116,13 +116,13 @@ class TdsController extends GetxController {
         'showOtp': false,
       });
 
-      Get.off(
-        () => SuccessPage(
-            buttonText: 'Continue',
-            callbackAction: () => Get.off(() => const TdsBankOtp()),
-            successMessage:
-                "OTP has been submitted successfully. \n\nPlease confirm your bank account details by proceeding."),
-      );
+      // Get.off(
+      //   () => SuccessPage(
+      //       buttonText: 'Continue',
+      //       callbackAction: () => Get.off(() => const TdsBankOtp()),
+      //       successMessage:
+      //           "OTP has been submitted successfully. \n\nPlease confirm your bank account details by proceeding."),
+      // );
     } catch (e) {
       Get.snackbar('Error', 'Something went wrong!');
     } finally {
@@ -166,11 +166,11 @@ class TdsController extends GetxController {
         'tdsDetails': true,
       });
 
-      Get.off(
-        () => const SuccessPage(
-            successMessage:
-                "Congratulations!!! Your registration is complete on the income tax site. \n\n MoneyCart team would share the TDS Refund amount with you shortly. \n\nKeep reviewing the 'Document' section on the App."),
-      );
+      // Get.off(
+      //   () => const SuccessPage(
+      //       successMessage:
+      //           "Congratulations!!! Your registration is complete on the income tax site. \n\n MoneyCart team would share the TDS Refund amount with you shortly. \n\nKeep reviewing the 'Document' section on the App."),
+      // );
     } catch (e) {
       showCustomSnackbar(
         title: 'Error',
@@ -220,12 +220,12 @@ class TdsController extends GetxController {
         }
       }
 
-      Get.off(
-        () => SuccessPage(
-            callbackAction: () => Get.off(() => const TdsFinalOtp()),
-            successMessage:
-                "Thanks for the payment !!!. \nMoneyCart team would connect with you within next 24 hours to file the Income Tax return and claim TDS refund.\n\n Please share the OTP for validation when you are notified"),
-      );
+      // Get.off(
+      //   () => SuccessPage(
+      //       callbackAction: () => Get.off(() => const TdsFinalOtp()),
+      //       successMessage:
+      //           "Thanks for the payment !!!. \nMoneyCart team would connect with you within next 24 hours to file the Income Tax return and claim TDS refund.\n\n Please share the OTP for validation when you are notified"),
+      // );
     } catch (e) {
       showCustomSnackbar(
         title: 'Error',
@@ -258,14 +258,14 @@ class TdsController extends GetxController {
         'processing': true,
       });
 
-      Get.off(
-        () => SuccessPage(
-          redirect: true,
-          callbackAction: () => Get.offAll(() => const BasePage()),
-          successMessage:
-              " Congratulations !!! Your ITR return has been successfully verified. \nYou would get the TDS refund in your bank account in 7-30 working days.\n\nNow Earn more by Referring MoneyCart to your friends and help them claim their refund.",
-        ),
-      );
+      // Get.off(
+      //   () => SuccessPage(
+      //     redirect: true,
+      //     callbackAction: () => Get.offAll(() => const BasePage()),
+      //     successMessage:
+      //         " Congratulations !!! Your ITR return has been successfully verified. \nYou would get the TDS refund in your bank account in 7-30 working days.\n\nNow Earn more by Referring MoneyCart to your friends and help them claim their refund.",
+      //   ),
+      // );
     } catch (e) {
       showCustomSnackbar(
         title: 'Error',
