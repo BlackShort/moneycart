@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:moneycart/core/errors/custom_snackbar.dart';
 import 'package:moneycart/core/utils/user_preferences.dart';
-import 'package:moneycart/core/errors/snackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DocController extends GetxController {
@@ -36,7 +36,8 @@ class DocController extends GetxController {
       if (docSnapshot.docs.isNotEmpty) {
         _documents.value = docSnapshot.docs.map((doc) => doc.data()).toList();
         _documents.refresh();
-        showCustomSnackbar(
+        CustomSnackbar.showSuccess(
+          context: Get.context!,
           title: 'Success',
           message: 'Documents fetched successfully.',
         );
@@ -59,9 +60,11 @@ class DocController extends GetxController {
         mode: LaunchMode.externalApplication,
       );
     } catch (e) {
-      showCustomSnackbar(
-          title: 'Failed',
-          message: 'Error downloading file. Please try again.');
+      CustomSnackbar.showFailure(
+        context: Get.context!,
+        title: 'Failed',
+        message: 'Error downloading file. Please try again.',
+      );
     }
   }
 
@@ -76,9 +79,11 @@ class DocController extends GetxController {
       selectedDetails!.value = docData![year];
       showDetailsTable.value = true;
     } catch (e) {
-      showCustomSnackbar(
-          title: 'Failed',
-          message: 'Error fetching details. Please try again.');
+      CustomSnackbar.showFailure(
+        context: Get.context!,
+        title: 'Failed',
+        message: 'Error fetching details. Please try again.',
+      );
     }
   }
 

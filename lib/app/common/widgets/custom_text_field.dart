@@ -67,6 +67,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: AppPallete.primary,
       controller: widget.controller,
       obscureText: _obscureText,
       focusNode: _focusNode,

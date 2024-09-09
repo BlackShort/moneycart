@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:moneycart/app/auth/controllers/auth_controller.dart';
 import 'package:moneycart/app/auth/models/user_model.dart';
@@ -159,17 +160,29 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         const SizedBox(height: 16),
-        ProfileField(title: 'Email', value: userData.email),
-        ProfileField(title: 'Phone', value: userData.phone),
         ProfileField(
-            title: 'Gender', value: userData.gender ?? 'Not specified'),
-        ProfileField(title: 'Address', value: userData.address),
+            icon: 'assets/icons/envelope_fill.svg',
+            title: 'Email',
+            value: userData.email),
+        ProfileField(
+            icon: 'assets/icons/phone_fill.svg',
+            title: 'Phone',
+            value: userData.phone),
+        ProfileField(
+            icon: 'assets/icons/user_fill.svg',
+            title: 'Gender',
+            value: userData.gender ?? 'Not specified'),
+        ProfileField(
+            icon: 'assets/icons/house_user.svg',
+            title: 'Address',
+            value: userData.address),
         const SizedBox(height: 32),
         Obx(
           () => SizedBox(
             width: double.infinity,
             child: LoadingButton(
               text: 'Log out',
+              color: AppPallete.errorColor,
               isLoading: _authController.isLoading.value,
               onPressed: () {
                 _authController.signOut();
@@ -185,42 +198,57 @@ class _ProfilePageState extends State<ProfilePage> {
 class ProfileField extends StatelessWidget {
   final String title;
   final String? value;
+  final String icon;
 
-  const ProfileField({required this.title, this.value, super.key});
+  const ProfileField({
+    required this.title,
+    this.value,
+    super.key,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: InputDecorator(
-        decoration: InputDecoration(
-          labelText: title,
-          labelStyle: const TextStyle(
-            fontSize: 18,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w500,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SvgPicture.asset(
+                icon,
+                width: 24,
+                height: 24,
+                colorFilter: const ColorFilter.mode(
+                  AppPallete.primary,
+                  BlendMode.srcIn,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  value ?? '',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+              ]),
+            ],
           ),
-          filled: true,
-          fillColor: Colors.grey[100],
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Colors.grey),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Colors.grey),
-          ),
-        ),
-        child: Text(
-          value ?? '',
-          style: const TextStyle(
-            fontSize: 17,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w500,
-            letterSpacing: 1.5,
-          ),
-        ),
+        ],
       ),
     );
   }

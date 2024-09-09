@@ -38,7 +38,7 @@ class Routes {
     GetPage(name: AppRoute.notification, page: () => NotificationPage()),
 
     // ----------Base Routes----------
-    GetPage(name: AppRoute.home, page: () => const HomePage()),
+    GetPage(name: AppRoute.home, page: () => HomePage()),
     GetPage(name: AppRoute.docs, page: () => DocPage()),
     GetPage(name: AppRoute.referral, page: () => const ReferralPage()),
     GetPage(name: AppRoute.profile, page: () => const ProfilePage()),

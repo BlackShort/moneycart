@@ -68,16 +68,16 @@ class PermissionHandlerService {
         context: _context!,
         builder: (context) {
           return AlertDialog(
-            title: Text('Permission Required'),
+            title: const Text('Permission Required'),
             content: Text('Permission ${permission.toString()} is permanently denied. Please enable it in app settings.'),
             actions: [
               TextButton(
                 onPressed: () => openAppSettings(),
-                child: Text('Open Settings'),
+                child: const Text('Open Settings'),
               ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
               ),
             ],
           );

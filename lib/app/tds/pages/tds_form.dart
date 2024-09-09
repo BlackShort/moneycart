@@ -48,13 +48,11 @@ class _TdsFormState extends State<TdsForm> {
       locale: DateTimePickerLocale.en_us,
       looping: true,
     );
-    if (pickedDate != null) {
-      setState(() {
-        selectedDate = pickedDate;
-        _dobController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
-      });
+    setState(() {
+      selectedDate = pickedDate;
+      _dobController.text = DateFormat('dd-MM-yyyy').format(pickedDate!);
+    });
     }
-  }
 
   String? validateDate(String? value) {
     if (value == null || value.isEmpty) {

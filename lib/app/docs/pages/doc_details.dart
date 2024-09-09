@@ -90,27 +90,27 @@ class DocDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DocController _docController = Get.find<DocController>();
+    final DocController docController = Get.find<DocController>();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Document Details'),
+        title: const Text('Document Details'),
       ),
       body: Obx(() {
-        if (!_docController.showDetailsTable.value) {
-          return Center(child: Text('No details to show.'));
+        if (!docController.showDetailsTable.value) {
+          return const Center(child: Text('No details to show.'));
         }
 
         return Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: _buildDetailsTable(_docController.selectedDetails),
+              child: _buildDetailsTable(docController.selectedDetails),
             ),
             const SizedBox(height: 5),
             ElevatedButton(
               onPressed: () {
-                _docController.hideDetails();
+                docController.hideDetails();
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,

@@ -32,11 +32,11 @@ class AboutUsPage extends StatelessWidget {
         ),
       ),
       body: const Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
+            Text(
               'About Our App',
               style: TextStyle(
                 fontSize: 24,
@@ -44,16 +44,16 @@ class AboutUsPage extends StatelessWidget {
                 fontFamily: 'Poppins',
               ),
             ),
-            const SizedBox(height: 16),
-            const Text(
+            SizedBox(height: 16),
+            Text(
               'Our app aims to revolutionize the way people travel by providing a seamless and convenient ride-sharing experience. With our state-of-the-art technology and user-friendly interface, we are committed to making your journey as comfortable and efficient as possible.',
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Poppins',
               ),
             ),
-            const SizedBox(height: 32),
-            const Text(
+            SizedBox(height: 32),
+            Text(
               'Our Team',
               style: TextStyle(
                 fontSize: 24,
@@ -61,8 +61,8 @@ class AboutUsPage extends StatelessWidget {
                 fontFamily: 'Poppins',
               ),
             ),
-            const SizedBox(height: 16),
-            const Text(
+            SizedBox(height: 16),
+            Text(
               'We are a dedicated team of professionals with a passion for innovation and excellence. Our team brings together expertise from various fields to create a product that is both functional and delightful to use.',
               style: TextStyle(
                 fontSize: 16,

@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:moneycart/app/home/controllers/home_controller.dart';
 import 'package:moneycart/app/home/widgets/custom_image_loader.dart';
 import 'package:moneycart/app/home/widgets/banner_carousel.dart';
@@ -14,40 +14,10 @@ import 'package:moneycart/config/theme/app_pallete.dart';
 import 'package:moneycart/app/base/widgets/custom_app_bar.dart';
 import 'package:moneycart/app/base/widgets/custom_drawer.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+  final HomeController _controller = Get.put(HomeController());
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  late HomeController _controller;
-  Timer? _hideBannerTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = HomeController();
-    _controller.init();
-    _controller.fetchBannerImages().then((_) {
-      if (!_controller.hasBannerImages) {
-        _hideBannerTimer = Timer(const Duration(seconds: 10), () {
-          setState(() {
-            _controller.bannerImages = [];
-          });
-        });
-      }
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    _hideBannerTimer?.cancel();
-    super.dispose();
-  }
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,23 +31,25 @@ class _HomePageState extends State<HomePage> {
           children: [
             SizedBox(
               height: 150,
-              child: _controller.bannerImages.isEmpty
-                ? const CustomImageLoader()
-                : BannerCarousel(
-                    bannerImages: _controller.bannerImages,
-                    pageController: _controller.pageController,
-                    onPageChanged: (index) {
-                      setState(() {
-                        _controller.currentPage = index;
-                      });
-                    },
-                  ),
+              child: Obx(() {
+                return _controller.bannerImages.isEmpty
+                    ? const CustomImageLoader()
+                    : BannerCarousel(
+                        bannerImages: _controller.bannerImages,
+                        pageController: _controller.pageController,
+                        onPageChanged: (index) {
+                          _controller.currentPage.value = index;
+                        },
+                      );
+              }),
             ),
             const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: _buildPageIndicator(),
-            ),
+            Obx(() {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: _buildPageIndicator(),
+              );
+            }),
             const SizedBox(height: 20),
             const Text(
               AppConstants.mainHeading,
@@ -133,7 +105,7 @@ class _HomePageState extends State<HomePage> {
     List<Widget> indicators = [];
     for (int i = 0; i < _controller.bannerImages.length; i++) {
       indicators.add(
-        _indicator(i == _controller.currentPage),
+        _indicator(i == _controller.currentPage.value),
       );
     }
     return indicators;

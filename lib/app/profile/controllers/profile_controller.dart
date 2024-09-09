@@ -33,15 +33,13 @@ class ProfileController extends GetxController {
       UserModel? user = await UserPreferences.getUserModel();
       if (user == null) {
         String? userId = await UserPreferences.getUserId();
-        if (userId != null) {
-          DocumentSnapshot<Map<String, dynamic>> snapshot =
-              await _firestore.collection('users').doc(userId).get();
-          if (snapshot.exists) {
-            user = UserModel.fromSnapshot(snapshot);
-            await UserPreferences.setUserModel(user);
-          }
+        DocumentSnapshot<Map<String, dynamic>> snapshot =
+            await _firestore.collection('users').doc(userId).get();
+        if (snapshot.exists) {
+          user = UserModel.fromSnapshot(snapshot);
+          await UserPreferences.setUserModel(user);
         }
-      }
+            }
       return user;
     } catch (e) {
       CustomSnackbar.showFailure(

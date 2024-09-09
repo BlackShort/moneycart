@@ -1,7 +1,7 @@
 name: moneycart
 description: "A Finance app by Moneycart Finsolv Pvt. Ltd."
 
-version: 1.1.0+7
+version: 1.1.0+8
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -51,13 +51,6 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   flutter_launcher_icons: ^0.13.1
 
-flutter_native_splash:
-  color: "#ffffff"  # Background color for splash screen
-  image: assets/logo/moneycart_icon.png  # Splash screen image
-
-  android_12:
-    icon_background_color: "#ffffff"  # Background color for icon in Android 12+
-    image: assets/logo/moneycart_icon.png  # Image for Android 12+ splash screen
 
 flutter:
   uses-material-design: true
@@ -74,3 +67,35 @@ flutter_launcher_icons:
   image_path: "assets/logo/moneycart_logo.png"
   android_name: "ic_launcher"
   ios_name: "AppIcon"
+
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+
+  color: "#ffffff" 
+  color_dark: "#252525"  
+
+  image: assets/logo/logo.png
+  image_dark: assets/logo/logo.png
+
+  branding: assets/logo/branding_light.png
+  branding_dark: assets/logo/branding_dark.png
+
+  branding_mode: bottom
+  branding_bottom_padding: 24
+
+  android_12:
+    color: "#ffffff" 
+    color_dark: "#252525"      
+
+    icon_background_color: "#0EBE75"  
+    icon_background_color_dark: "#0EBE75"
+
+    image: assets/logo/logo.png 
+    image_dark: assets/logo/logo.png
+
+    branding: assets/logo/branding_light.png
+    branding_dark: assets/logo/branding_dark.png
+    branding_bottom_padding: 24
+

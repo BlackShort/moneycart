@@ -14,7 +14,7 @@ class BasePage extends StatelessWidget {
     return CustomBottomBar(
       items: [
         BottomBarModel(
-          page: const HomePage(),
+          page: HomePage(),
           icon: 'assets/icons/home_out.svg',
           activeIcon: 'assets/icons/home_fill.svg',
           title: 'Home',

@@ -24,7 +24,7 @@ class _TdsOtpState extends State<TdsOtp> {
   Widget build(BuildContext context) {
     final controller = Get.put(TdsController());
 
-    Future<void> _refresh() async {
+    Future<void> refresh() async {
       await controller.fetchOTPState();
     }
 
@@ -59,7 +59,7 @@ class _TdsOtpState extends State<TdsOtp> {
                 BlendMode.srcIn,
               ),
             ),
-            onPressed: _refresh,
+            onPressed: refresh,
           ),
         ],
       ),
@@ -67,7 +67,7 @@ class _TdsOtpState extends State<TdsOtp> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: RefreshIndicator(
           color: AppPallete.boldprimary,
-          onRefresh: _refresh,
+          onRefresh: refresh,
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(20.0),
             child: Column(

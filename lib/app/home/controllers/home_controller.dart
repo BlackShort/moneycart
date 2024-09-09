@@ -1,17 +1,19 @@
 import 'dart:async';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeController {
+class HomeController extends GetxController {
   late PageController pageController;
   late Timer timer;
-  int currentPage = 0;
-  List<String> bannerImages = [];
-  bool hasBannerImages = false;
+  var currentPage = 0.obs;
+  var bannerImages = <String>[].obs;
 
-  void init() {
-    pageController = PageController(initialPage: currentPage);
+  @override
+  void onInit() {
+    super.onInit();
+    pageController = PageController(initialPage: currentPage.value);
     timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       int nextPage = (pageController.page?.toInt() ?? 0) + 1;
       if (nextPage >= bannerImages.length) {
@@ -23,6 +25,7 @@ class HomeController {
         curve: Curves.easeInOut,
       );
     });
+    fetchBannerImages();
   }
 
   Future<void> fetchBannerImages() async {
@@ -34,30 +37,39 @@ class HomeController {
 
     if (cachedImages != null &&
         cachedImages.isNotEmpty &&
-        lastFetchTime != null &&
-        DateTime.now().millisecondsSinceEpoch - lastFetchTime < cacheExpiryTime) {
-      bannerImages = cachedImages;
-      hasBannerImages = bannerImages.isNotEmpty;
+        DateTime.now().millisecondsSinceEpoch - lastFetchTime! < cacheExpiryTime) {
+      bannerImages.addAll(cachedImages);
     } else {
-      bannerImages = await _downloadBannerImages();
-      hasBannerImages = bannerImages.isNotEmpty;
-      prefs.setStringList('banner_images', bannerImages);
-      prefs.setInt('last_fetch_time', DateTime.now().millisecondsSinceEpoch);
+      try {
+        List<String> images = await _downloadBannerImages();
+        bannerImages.addAll(images);
+        prefs.setStringList('banner_images', images);
+        prefs.setInt('last_fetch_time', DateTime.now().millisecondsSinceEpoch);
+      } catch (e) {
+        print('Error fetching banner images: $e');
+      }
     }
   }
 
   Future<List<String>> _downloadBannerImages() async {
-    ListResult result = await FirebaseStorage.instance.ref('app_data/banners').listAll();
-    List<String> urls = [];
-    for (var ref in result.items) {
-      String url = await ref.getDownloadURL();
-      urls.add(url);
+    try {
+      ListResult result = await FirebaseStorage.instance.ref('app_data/banners').listAll();
+      List<String> urls = [];
+      for (var ref in result.items) {
+        String url = await ref.getDownloadURL();
+        urls.add(url);
+      }
+      return urls;
+    } catch (e) {
+      print('Error downloading images from Firebase Storage: $e');
+      return [];
     }
-    return urls;
   }
 
-  void dispose() {
+  @override
+  void onClose() {
     timer.cancel();
     pageController.dispose();
+    super.onClose();
   }
 }

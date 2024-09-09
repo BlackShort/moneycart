@@ -20,9 +20,10 @@ class LoadingButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         foregroundColor: AppPallete.white,
-        backgroundColor:
-            isLoading ? AppPallete.dullprimary : AppPallete.boldprimary,
-        disabledBackgroundColor: AppPallete.dullprimary,
+        backgroundColor: isLoading
+            ? color ?? AppPallete.dullprimary
+            : color ?? AppPallete.boldprimary,
+        disabledBackgroundColor: color ?? AppPallete.dullprimary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),

@@ -22,7 +22,7 @@ class _TdsDetailsState extends State<TdsDetails> {
   late String _currentYear;
   late String _previousYear;
 
-  bool _previousYearSelected = true;
+  final bool _previousYearSelected = true;
 
   int get totalTds {
     int totalTds = 0;
