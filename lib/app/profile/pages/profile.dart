@@ -242,6 +242,7 @@ class ProfileField extends StatelessWidget {
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
+                    letterSpacing: 0.8,
                     fontFamily: 'Poppins',
                   ),
                 ),
