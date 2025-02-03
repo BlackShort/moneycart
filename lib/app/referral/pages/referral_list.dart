@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:moneycart/app/base/widgets/custom_drawer.dart';
 import 'package:moneycart/app/referral/controllers/referral_controller.dart';
 import 'package:moneycart/config/theme/app_pallete.dart';
 import 'package:moneycart/core/utils/format_date.dart';
@@ -26,7 +25,6 @@ class ReferralList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const CustomDrawer(),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(
@@ -132,7 +130,7 @@ class ReferralList extends StatelessWidget {
 
               return Card(
                 margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                elevation: 2,
+                elevation: 1,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

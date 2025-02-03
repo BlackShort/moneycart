@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:moneycart/core/errors/snackbar.dart';
 import '../models/notification_model.dart';
 
 class NotificationController extends GetxController {
@@ -53,15 +54,45 @@ class NotificationController extends GetxController {
   }
 
   Future<void> deleteNotification(String id) async {
-    notifications.removeWhere((notif) => notif.id == id);
-    await _firestore.collection('notifications').doc(id).delete();
+    try {
+      // Fetch the document that holds the notifications array
+      DocumentSnapshot doc = await _firestore
+          .collection('notifications')
+          .doc(_auth.currentUser!.uid)
+          .get();
+
+      // Cast the data to a Map and access the notifications array
+      List notificationsList =
+          List.from((doc.data() as Map<String, dynamic>)['notifications']);
+
+      // Find the notification by its ID
+      final notificationToDelete = notificationsList.firstWhere(
+        (notif) => notif['id'] == id,
+        orElse: () => null,
+      );
+
+      if (notificationToDelete != null) {
+        // Remove the notification from the list
+        notificationsList.remove(notificationToDelete);
+
+        // Update the Firestore document with the modified notifications list
+        await _firestore
+            .collection('notifications')
+            .doc(_auth.currentUser!.uid)
+            .update({'notifications': notificationsList});
+      }
+    } catch (e) {
+      showCustomSnackbar(
+        title: 'Error',
+        message: 'Failed to delete notification: $e',
+      );
+      hasError.value = true;
+    }
   }
 
   void deleteOldNotifications() {
     final DateTime now = DateTime.now();
     notifications.removeWhere((notif) =>
         notif.timestamp.isBefore(now.subtract(const Duration(days: 7))));
-    // Optional: remove old notifications from Firestore as well
-    // await removeOldNotificationsFromFirestore();
   }
 }

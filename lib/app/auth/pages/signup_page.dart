@@ -31,12 +31,20 @@ class _SignupPageState extends State<SignupPage> {
     if (value == null || value.isEmpty) {
       return 'Please enter your phone number';
     }
-    if (value.length < 10) {
-      return 'Phone number must be at least 10 digits';
+
+    // Remove spaces
+    String cleanedValue = value.replaceAll(' ', '');
+
+    // Check if the cleaned value is exactly 10 digits
+    if (cleanedValue.length != 10) {
+      return 'Phone number must be exactly 10 digits';
     }
-    if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+
+    // Ensure the cleaned value contains only digits
+    if (!RegExp(r'^\d{10}$').hasMatch(cleanedValue)) {
       return 'Please enter a valid phone number';
     }
+
     return null;
   }
 

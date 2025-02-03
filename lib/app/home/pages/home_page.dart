@@ -31,17 +31,20 @@ class HomePage extends StatelessWidget {
           children: [
             SizedBox(
               height: 150,
-              child: Obx(() {
-                return _controller.bannerImages.isEmpty
-                    ? const CustomImageLoader()
-                    : BannerCarousel(
-                        bannerImages: _controller.bannerImages,
-                        pageController: _controller.pageController,
-                        onPageChanged: (index) {
-                          _controller.currentPage.value = index;
-                        },
-                      );
-              }),
+              child: ValueListenableBuilder<int>(
+                valueListenable: _controller.currentPage,
+                builder: (context, value, child) {
+                  return _controller.bannerImages.isEmpty
+                      ? const CustomImageLoader()
+                      : BannerCarousel(
+                          bannerImages: _controller.bannerImages,
+                          pageController: _controller.pageController,
+                          onPageChanged: (index) {
+                            _controller.currentPage.value = index;
+                          },
+                        );
+                },
+              ),
             ),
             const SizedBox(height: 10),
             Obx(() {

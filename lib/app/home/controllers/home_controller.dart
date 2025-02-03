@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class HomeController extends GetxController {
   late PageController pageController;
   late Timer timer;
-  var currentPage = 0.obs;
+  var currentPage = ValueNotifier<int>(0);
   var bannerImages = <String>[].obs;
 
   @override
@@ -24,6 +24,7 @@ class HomeController extends GetxController {
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
+      currentPage.value = nextPage;
     });
     fetchBannerImages();
   }
@@ -38,7 +39,7 @@ class HomeController extends GetxController {
     if (cachedImages != null &&
         cachedImages.isNotEmpty &&
         DateTime.now().millisecondsSinceEpoch - lastFetchTime! < cacheExpiryTime) {
-      bannerImages.addAll(cachedImages);
+        bannerImages.addAll(cachedImages);
     } else {
       try {
         List<String> images = await _downloadBannerImages();
