@@ -83,6 +83,15 @@ class AppConstants {
   // ------------tds_details.dart-----------//
   static const String processing = 'assets/images/processing.png';
 
+  // ------------pf_services.dart-----------//
+  static const String pfWithdrawal = 'PF Withdrawal';
+  static const String pfWithdrawalImg = 'assets/icons/bank.svg';
+  static const String pfTransfer = 'PF Transfer';
+  static const String pfTransferImg = 'assets/icons/refresh.svg';
+  static const String pfAdvance = 'PF Advance';
+  static const String pfAdvanceImg = 'assets/icons/money.svg';
+
+
   // Error messages
   static const String networkError = 'Please check your internet connection.';
   static const String loginError = 'Invalid username or password.';

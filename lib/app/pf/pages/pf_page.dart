@@ -6,7 +6,7 @@ import 'package:moneycart/app/pf/controllers/pf_controller.dart';
 import 'package:moneycart/app/pf/pages/pf_details.dart';
 import 'package:moneycart/app/pf/pages/pf_final_otp.dart';
 import 'package:moneycart/app/pf/pages/pf_otp.dart';
-import 'package:moneycart/app/pf/pages/pf_transfer.dart';
+import 'package:moneycart/app/pf/pages/pf_services.dart';
 
 class PfPage extends StatefulWidget {
   const PfPage({super.key});
@@ -39,7 +39,7 @@ class _PfPageState extends State<PfPage> {
                 "You would get the TDS refund in your bank account in 7-15 working days\n\nThank you for using MoneyCart",
           ));
     } else {
-      Get.to(() => const PfTransferForm());
+      Get.to(() => const PfServicesPage());
     }
   }
 
@@ -84,7 +84,7 @@ class _PfPageState extends State<PfPage> {
                       ),
                     );
                   } else {
-                    return const PfTransferForm();
+                    return const PfServicesPage();
                   }
                 },
               ),

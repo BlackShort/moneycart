@@ -9,17 +9,25 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 
-class PfTransferForm extends StatefulWidget {
+class PfForm extends StatefulWidget {
   static route() => MaterialPageRoute(
-        builder: (context) => const PfTransferForm(),
+        builder: (context) => const PfForm(header: '',),
       );
-  const PfTransferForm({super.key});
+
+  final String header;
+  final String? option;
+
+  const PfForm({
+    super.key,
+    required this.header,
+    this.option,
+  });
 
   @override
-  State<PfTransferForm> createState() => _PfTransferFormState();
+  State<PfForm> createState() => _PfFormState();
 }
 
-class _PfTransferFormState extends State<PfTransferForm> {
+class _PfFormState extends State<PfForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final panRegExp = RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$');
@@ -81,9 +89,9 @@ class _PfTransferFormState extends State<PfTransferForm> {
     final controller = Get.put(PfController());
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'PF Transfer',
-          style: TextStyle(
+        title: Text(
+          widget.header,
+          style: const TextStyle(
             color: AppPallete.secondary,
             fontSize: 20,
             fontWeight: FontWeight.w500,

@@ -5,6 +5,7 @@ import 'package:moneycart/app/docs/pages/doc_page.dart';
 import 'package:moneycart/app/home/pages/home_page.dart';
 import 'package:moneycart/app/profile/pages/profile.dart';
 import 'package:moneycart/app/referral/pages/referral_page.dart';
+// import 'package:moneycart/app/status/pages/status_page.dart';
 
 class BasePage extends StatelessWidget {
   const BasePage({super.key});
@@ -25,6 +26,12 @@ class BasePage extends StatelessWidget {
           activeIcon: 'assets/icons/doc_fill.svg',
           title: 'Docs',
         ),
+        // BottomBarModel(
+        //   page: const StatusPage(),
+        //   icon: 'assets/icons/duration_out.svg',
+        //   activeIcon: 'assets/icons/duration_fill.svg',
+        //   title: 'Status',
+        // ),
         BottomBarModel(
           page: const ReferralPage(),
           icon: 'assets/icons/referral_out.svg',
