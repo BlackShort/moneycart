@@ -75,7 +75,7 @@ class _PfServicesPageState extends State<PfServicesPage> {
       {
         "title": AppConstants.pfWithdrawal,
         "icon": AppConstants.pfWithdrawalImg,
-        "screen": PfForm(
+        "screen": const PfForm(
           header: "PF Withdrawal",
           option: "bank",
         ),
@@ -83,7 +83,7 @@ class _PfServicesPageState extends State<PfServicesPage> {
       {
         "title": AppConstants.pfTransfer,
         "icon": AppConstants.pfTransferImg,
-        "screen": PfForm(
+        "screen": const PfForm(
           header: "PF Transfer",
           option: "bank",
         ),
@@ -92,7 +92,7 @@ class _PfServicesPageState extends State<PfServicesPage> {
         {
           "title": AppConstants.pfAdvance,
           "icon": AppConstants.pfAdvanceImg,
-          "screen": PfForm(
+          "screen": const PfForm(
             header: "PF Advance",
             option: "bank",
           ),

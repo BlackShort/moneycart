@@ -1,1 +1,22 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"moneycart-d1372","appId":"1:697482930359:android:fb206cbda3453607374532","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"moneycart-d1372","configurations":{"android":"1:697482930359:android:fb206cbda3453607374532","ios":"1:697482930359:ios:d09eec22a8128c84374532"}}}}}}
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "moneycart-d1372",
+                    "appId": "1:697482930359:android:fb206cbda3453607374532",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "moneycart-d1372",
+                    "configurations": {
+                        "android": "1:697482930359:android:fb206cbda3453607374532",
+                        "ios": "1:697482930359:ios:d09eec22a8128c84374532"
+                    }
+                }
+            }
+        }
+    }
+}
